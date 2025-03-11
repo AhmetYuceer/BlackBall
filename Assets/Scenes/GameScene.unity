@@ -939,18 +939,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
-    - target: {fileID: 1385425202215205850, guid: 89da2c39ee8edc14f80497b0b7544aef, type: 3}
-      propertyPath: _bounceForce
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385425202215205850, guid: 89da2c39ee8edc14f80497b0b7544aef, type: 3}
-      propertyPath: _secondForce
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385425202215205850, guid: 89da2c39ee8edc14f80497b0b7544aef, type: 3}
-      propertyPath: _defaultForce
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
