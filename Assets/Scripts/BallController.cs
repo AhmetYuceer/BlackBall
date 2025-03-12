@@ -1,74 +1,111 @@
-using System;
-using UnityEngine;
 using Enums;
+using Managers;
+using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    [SerializeField] private float _defaultForce;
-    [SerializeField] private float _secondForce;
-    [SerializeField] private float _bounceForce;
+    private bool _isStartedGame;
+    
+    [SerializeField] private float _tapJumpForce = 5f;
+    [SerializeField] private float _wallBounceForce = 3f;
     
     private Rigidbody2D _rigidbody;
     private Direction _direction;
+
+    [Header("Wall Bounce Settings")] 
+    [SerializeField] private Vector2 _wallBounceDirectionUP = new Vector2(0, 0);
+    [SerializeField] private Vector2 _wallBounceDirectionDown = new Vector2(0, 1.3f);
+    [SerializeField] private Vector2 _wallBounceDirectionRight = new Vector2(-1f, 0);
+    [SerializeField] private Vector2 _wallBounceDirectionLeft = new Vector2(1f, 0);
+    private Vector2 _wallBounceDirection = Vector2.zero;
     
-    private Vector2 force = Vector2.zero;
-    private Vector2 bounceForce = Vector2.zero;
+    [Header("Tap Bounce Settings")]
+    [SerializeField] private Vector2 _tapBounceDirectionRight = new Vector2(0.5f, 1.3f);
+    [SerializeField] private Vector2 _tapBounceDirectionLeft = new Vector2(-0.5f, 1.3f);
+    private Vector2 _tapBounceDirection = Vector2.zero;
+     
+    [Header("Waiting Bounce Settings")]
+    [SerializeField] private Vector2 _waitingWallBounceDirectionDown = new Vector2(0, 4.3f);
     
-    void Start()
+    private void OnEnable()
+    {
+        EventBus.StartGameEvent += EventBusOnStartGameEvent;
+        EventBus.EndGameEvent += EventBusOnEndGameEvent;
+        EventBus.BallJumpEvent += HandleJump;
+    }
+
+    private void OnDisable()
+    {
+        EventBus.StartGameEvent -= EventBusOnStartGameEvent;
+        EventBus.EndGameEvent -= EventBusOnEndGameEvent;
+        EventBus.BallJumpEvent -= HandleJump;
+    }
+
+    private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        force = new Vector2(1.5f, 2f);     
+        ChangeDirection(Direction.Right);
     }
-
     
-    private void Update()
+    private void HandleJump()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            _rigidbody.velocity = Vector2.zero;
-            _rigidbody.AddForce(force * _secondForce, ForceMode2D.Impulse);
-        }
+        if (!_isStartedGame) return;
+         
+        _rigidbody.velocity = Vector2.zero;
+        _rigidbody.AddForce(_tapBounceDirection * _tapJumpForce, ForceMode2D.Impulse);
     }
-
+    
     private void ChangeDirection(Direction direction)
     {
         _direction = direction;
         switch (_direction)
         {
             case Direction.Right:
-                force = new Vector2(0.5f, 1.3f);
+                _tapBounceDirection = _tapBounceDirectionRight;
                 break;
             case Direction.Left:
-                force = new Vector2(-0.5f, 1.3f);     
+                _tapBounceDirection = _tapBounceDirectionLeft;
                 break;
         }
     }
 
-    private void BounceForce(WallType wallType)
+    private void WallBounceForce(WallType wallType)
     {
         switch (wallType)
         {  
             case WallType.UpWall:
-                bounceForce = new Vector2(0, 0);
+                _wallBounceDirection = _wallBounceDirectionUP;
                 break;
             case WallType.DownWall:
-                bounceForce = new Vector2(0, 1.3f);
-                bounceForce += force;
+                _wallBounceDirection = _wallBounceDirectionDown;
+                _wallBounceDirection += _tapBounceDirection;
                 break;
             case WallType.LeftWall:
-                bounceForce = new Vector2(1f, 0);
+                _wallBounceDirection = _wallBounceDirectionLeft;
                 break;
             case WallType.RightWall:
-                bounceForce = new Vector2(-1f, 0);
+                _wallBounceDirection = _wallBounceDirectionRight;
                 break;      
         }
-        _rigidbody.AddForce(bounceForce * _bounceForce , ForceMode2D.Impulse);
+        _rigidbody.AddForce(_wallBounceDirection * _wallBounceForce , ForceMode2D.Impulse);
+    }
+
+    private void WaitingBounceForce()
+    {
+        _wallBounceDirection = _waitingWallBounceDirectionDown;
+        _rigidbody.AddForce(_wallBounceDirection * _wallBounceForce , ForceMode2D.Impulse);
     }
     
     private void OnCollisionEnter2D (Collision2D other)
     {
         if (other.transform.CompareTag("Wall") && other.transform.TryGetComponent(out Wall wall))
         {
+            if (!_isStartedGame)
+            {
+                WaitingBounceForce();
+                return;
+            }
+            
             switch (wall.GetWallType)
             {
                 case WallType.LeftWall:
@@ -78,7 +115,17 @@ public class BallController : MonoBehaviour
                     ChangeDirection(Direction.Left);
                     break;
             }
-            BounceForce(wall.GetWallType);
+            WallBounceForce(wall.GetWallType);
         }
+    }
+
+    private void EventBusOnStartGameEvent()
+    {
+        _isStartedGame = true;
+    }    
+
+    private void EventBusOnEndGameEvent()
+    {
+        _isStartedGame = false;
     }
 }

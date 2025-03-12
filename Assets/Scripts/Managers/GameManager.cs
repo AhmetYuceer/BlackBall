@@ -1,18 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace Managers
 {
-    // Start is called before the first frame update
-    void Start()
+    public class GameManager : MonoBehaviour
     {
+        private bool _isStartedGame = false;
         
-    }
+        private void OnEnable()
+        {
+            EventBus.StartGameEvent += StartGame;
+            EventBus.EndGameEvent += EndGame;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void OnDisable()
+        {
+            EventBus.StartGameEvent -= StartGame;
+            EventBus.EndGameEvent -= EndGame;
+        }
+
+        private void Start()
+        {
+            _isStartedGame = false;
+        }
+
+        private void StartGame()
+        {
+            _isStartedGame = true;
+            Debug.Log("Game started");
+        }
+
+        private void EndGame()
+        {
+            _isStartedGame = false;
+            Debug.Log("Game ended");
+        }
     }
 }
