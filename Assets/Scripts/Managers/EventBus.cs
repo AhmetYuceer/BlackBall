@@ -8,7 +8,10 @@ namespace Managers
         public static event Action EndGameEvent;
         public static event Action BallJumpEvent;
         public static event Action HitTheWallEvent;
- 
+         
+        public static event Action<int> UpdateCurrentScoreEvent;
+        public static event Action<int> UpdateMaxScoreEvent;
+        
         public static void OnStartGameEvent()
         {
             StartGameEvent?.Invoke();
@@ -27,6 +30,16 @@ namespace Managers
         public static void OnHitTheWallEvent()
         {
             HitTheWallEvent?.Invoke();
+        }
+
+        public static void DOOnUpdateCurrentScoreEvent(int score)
+        {
+            UpdateCurrentScoreEvent?.Invoke(score);
+        }
+
+        public static void DOOnUpdateMaxScoreEvent(int score)
+        {
+            UpdateMaxScoreEvent?.Invoke(score);
         }
     }
 }
