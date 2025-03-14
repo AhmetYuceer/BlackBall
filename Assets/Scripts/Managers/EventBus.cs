@@ -6,9 +6,9 @@ namespace Managers
     {
         public static event Action StartGameEvent;
         public static event Action EndGameEvent;
-        
         public static event Action BallJumpEvent;
-
+        public static event Action HitTheWallEvent;
+ 
         public static void OnStartGameEvent()
         {
             StartGameEvent?.Invoke();
@@ -22,6 +22,11 @@ namespace Managers
         public static void OnBallJumpEvent()
         {
             BallJumpEvent?.Invoke();
+        }
+
+        public static void OnHitTheWallEvent()
+        {
+            HitTheWallEvent?.Invoke();
         }
     }
 }

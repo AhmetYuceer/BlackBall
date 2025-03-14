@@ -1,6 +1,7 @@
 using Enums;
 using Managers;
 using UnityEngine;
+using Walls;
 
 public class BallController : MonoBehaviour
 {
@@ -54,6 +55,24 @@ public class BallController : MonoBehaviour
         _rigidbody.velocity = Vector2.zero;
         _rigidbody.AddForce(_tapBounceDirection * _tapJumpForce, ForceMode2D.Impulse);
     }
+
+    private void HitTheWall(WallBase wall)
+    {
+        if (wall is WallWithObstacle wallWithObstacle)
+        {
+            switch (wall.WallType)
+            {
+                case WallType.LeftWall:
+                    ChangeDirection(Direction.Right);
+                    break;
+                case WallType.RightWall:
+                    ChangeDirection(Direction.Left);
+                    break;
+            }
+            wallWithObstacle.HitTheWall();
+        }
+        WallBounceForce(wall.WallType);
+    }
     
     private void ChangeDirection(Direction direction)
     {
@@ -98,24 +117,14 @@ public class BallController : MonoBehaviour
     
     private void OnCollisionEnter2D (Collision2D other)
     {
-        if (other.transform.CompareTag("Wall") && other.transform.TryGetComponent(out Wall wall))
+        if (other.transform.CompareTag("Wall") && other.transform.TryGetComponent(out WallBase wall))
         {
             if (!_isStartedGame)
             {
                 WaitingBounceForce();
                 return;
             }
-            
-            switch (wall.GetWallType)
-            {
-                case WallType.LeftWall:
-                    ChangeDirection(Direction.Right);
-                    break;
-                case WallType.RightWall:
-                    ChangeDirection(Direction.Left);
-                    break;
-            }
-            WallBounceForce(wall.GetWallType);
+            HitTheWall(wall);
         }
     }
 

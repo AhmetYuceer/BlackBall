@@ -17,7 +17,12 @@ namespace Managers
             EventBus.StartGameEvent -= EventBusOnStartGameEvent;
             EventBus.EndGameEvent -= EventBusOnEndGameEvent;
         }
-    
+
+        private void Start()
+        {
+            _isStartedGame = false;
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
