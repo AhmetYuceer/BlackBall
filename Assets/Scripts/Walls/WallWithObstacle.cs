@@ -8,27 +8,19 @@ namespace Walls
 {
     public class WallWithObstacle : WallBase
     { 
-        [SerializeField] private List<GameObject> _obtacles = new List<GameObject>();
-        private Stack<GameObject> _shuffledObtacles = new Stack<GameObject>();
-        private Stack<GameObject> _activeObtacles = new Stack<GameObject>();
+        [SerializeField] private List<Obstacle> _obtacles = new List<Obstacle>();
+        private Stack<Obstacle> _shuffledObtacles = new Stack<Obstacle>();
+        private Stack<Obstacle> _activeObtacles = new Stack<Obstacle>();
 
         [Header("Particle Settings")]
         [SerializeField] private ParticleSystem _hitParticle;
-        
+
         private void Start()
         {
             if (_obtacles.Count <= 0) return;
             StartCoroutine(ActivateObtacles(0.1f));
         }
 
-        private void DeactivateObtacles()
-        {
-            while (_activeObtacles.Count > 0)
-            {
-                _activeObtacles.Pop().SetActive(false);
-            }
-        }
-    
         public void HitTheWall()
         {
             if (_obtacles.Count <= 0) return;
@@ -39,22 +31,33 @@ namespace Walls
 
         private IEnumerator ActivateObtacles(float delay)
         {
-            DeactivateObtacles();
+            StartCoroutine(DeactivateObtacles());
             ShuffleObtacles();
-
+            
             yield return new WaitForSeconds(delay);
-        
+            
             for (int i = 0; i < 4; i++)
             {
-                GameObject obstacle = _shuffledObtacles.Pop();
-                obstacle.SetActive(true);
+                Obstacle obstacle = _shuffledObtacles.Pop();
+                obstacle.Activate();
                 _activeObtacles.Push(obstacle);
+                yield return new WaitForSeconds(0.1f);
             }
         }
-    
+        
+        private IEnumerator DeactivateObtacles()
+        {
+            while (_activeObtacles.Count > 0)
+            {
+                Obstacle obstacle = _activeObtacles.Pop();
+                obstacle.Deactivate();
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        
         private void ShuffleObtacles()
         {
-            GameObject[] array = _obtacles.ToArray();
+            Obstacle[] array = _obtacles.ToArray();
 
             var rnd = new System.Random();
             var shuffledArray = array.OrderBy(item => rnd.Next()).ToArray();

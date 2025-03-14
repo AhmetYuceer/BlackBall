@@ -26,7 +26,7 @@ namespace Managers
         private void StartGame()
         {
             _isStartedGame = true;
-            Debug.Log("Game started");
+            // Debug.Log("Game started");
         }
 
         private void EndGame()
