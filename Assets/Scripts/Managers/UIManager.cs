@@ -52,13 +52,13 @@ namespace Managers
         private void UpdateMaxScoreText(int score)
         {
             _maxScoreText.text = score.ToString();
-            _currentScoreTextGameOver.text = score.ToString();
+            _maxScoreTextGameOver.text = score.ToString();
         }
         
         private void UpdateCurrentScoreText(int score)
         {
             _currentScoreText.text = score.ToString();
-            _maxScoreTextGameOver.text = score.ToString();
+            _currentScoreTextGameOver.text = score.ToString();
         }
     }
 }
