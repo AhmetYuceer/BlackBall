@@ -169,8 +169,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3279978624
-  m_fontColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.7647059}
+    rgba: 3607101440
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0.84313726}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -408,52 +408,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5406, y: -0.9147689, z: -0.073084764}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &172548071
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 172548073}
-  - component: {fileID: 172548072}
-  m_Layer: 0
-  m_Name: AnimationController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &172548072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172548071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d6f681bec57dd14e98d85a6374d9f55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ball: {fileID: 845632051}
-  _jumpAnimationPrefab: {fileID: 8177513240405607597, guid: 5b24a1c6fa869e3488d76cf9876cb0ac, type: 3}
---- !u!4 &172548073
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172548071}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1220,8 +1174,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3279978624
-  m_fontColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.7647059}
+    rgba: 3607101440
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0.84313726}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2007,17 +1961,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b3e25327093d2d489dcc4364bb439d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &845632051 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1385425202215205850, guid: 89da2c39ee8edc14f80497b0b7544aef, type: 3}
-  m_PrefabInstance: {fileID: 3656440425522873152}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e0c290c1a2a244b975dcc4807ef274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &881418800
@@ -3274,7 +3217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.92156863}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.98039216}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3987,17 +3930,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1661790684509038081, guid: 01ab699d2506afc4c9e773046da1b108, type: 3}
-      propertyPath: m_TagString
-      value: Obstacle
+    - target: {fileID: 3381445190873377142, guid: 01ab699d2506afc4c9e773046da1b108, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5858261327470706782, guid: 01ab699d2506afc4c9e773046da1b108, type: 3}
-      propertyPath: m_CullingMode
+    - target: {fileID: 3699070238175218439, guid: 01ab699d2506afc4c9e773046da1b108, type: 3}
+      propertyPath: m_FlipY
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8213001042742971239, guid: 01ab699d2506afc4c9e773046da1b108, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8213001042742971239, guid: 01ab699d2506afc4c9e773046da1b108, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4690,7 +4629,6 @@ SceneRoots:
   - {fileID: 3656440425522873152}
   - {fileID: 1452932511}
   - {fileID: 944191616}
-  - {fileID: 172548073}
   - {fileID: 95682277}
   - {fileID: 612760443}
   - {fileID: 66688932}

@@ -9,8 +9,8 @@ namespace Walls
     public class WallWithObstacle : WallBase
     { 
         [SerializeField] private List<Obstacle> _obtacles = new List<Obstacle>();
-        private Stack<Obstacle> _shuffledObtacles = new Stack<Obstacle>();
-        private Stack<Obstacle> _activeObtacles = new Stack<Obstacle>();
+        private Stack<Obstacle> _shuffledObstacles = new Stack<Obstacle>();
+        private Stack<Obstacle> _activeObstacles = new Stack<Obstacle>();
 
         [Header("Particle Settings")]
         [SerializeField] private ParticleSystem _hitParticle;
@@ -37,19 +37,23 @@ namespace Walls
 
         private IEnumerator ActivateObtacles(float delay)
         {
-            StartCoroutine(DeactivateObtacles());
-            ShuffleObtacles();
+            yield return StartCoroutine(DeactivateObtacles());
+            ShuffleObstacles();
 
             yield return new WaitForSeconds(delay);
-            
-            for (int i = 0; i < 4; i++)
+
+            int count = Random.Range(4, 7);
+
+            for (int i = 0; i < count; i++)
             {
-                Obstacle obstacle = _shuffledObtacles.Pop();
+                if (_shuffledObstacles.Count == 0) break;
+
+                Obstacle obstacle = _shuffledObstacles.Pop();
                 obstacle.Activate();
-                _activeObtacles.Push(obstacle);
+                _activeObstacles.Push(obstacle);
                 yield return new WaitForSeconds(0.1f);
             }
-            
+
             foreach (var obstacle in _obtacles)
             {
                 obstacle.ColliderTrigger(false);
@@ -58,26 +62,31 @@ namespace Walls
         
         private IEnumerator DeactivateObtacles()
         {
-            while (_activeObtacles.Count > 0)
+            while (_activeObstacles.Count > 0)
             {
-                Obstacle obstacle = _activeObtacles.Pop();
+                Obstacle obstacle = _activeObstacles.Pop();
                 obstacle.Deactivate();
                 yield return new WaitForSeconds(0.1f);
             }
         }
         
-        private void ShuffleObtacles()
+        private void ShuffleObstacles()
         {
             Obstacle[] array = _obtacles.ToArray();
 
             var rnd = new System.Random();
-            var shuffledArray = array.OrderBy(item => rnd.Next()).ToArray();
 
-            _shuffledObtacles.Clear(); 
-
-            foreach (var obstacle in shuffledArray)
+            for (int i = array.Length - 1; i > 0; i--)
             {
-                _shuffledObtacles.Push(obstacle);
+                int j = rnd.Next(i + 1);
+                (array[i], array[j]) = (array[j], array[i]);
+            }
+
+            _shuffledObstacles.Clear();
+
+            foreach (var obstacle in array)
+            {
+                _shuffledObstacles.Push(obstacle);
             }
         }
     }

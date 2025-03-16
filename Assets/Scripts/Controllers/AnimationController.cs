@@ -5,7 +5,7 @@ namespace Controllers
 {
     public class AnimationController : MonoBehaviour
     {
-        [SerializeField] private BallController _ball;
+         private BallController _ball;
         [SerializeField] private GameObject _jumpAnimationPrefab;
         private bool _isStartedGame = false;
 
@@ -32,7 +32,13 @@ namespace Controllers
         {
             _isStartedGame = false;
         }
-        
+
+
+        private void Start()
+        {
+            _ball = GetComponent<BallController>();
+        }
+
         private void EventBusOnBallJumpEvent()
         {
             if (_isStartedGame)

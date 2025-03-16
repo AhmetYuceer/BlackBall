@@ -25,6 +25,7 @@ namespace Managers
         private void Start()
         {
             _currentScore = 0;
+            LoadScore();
         }
         
         private void AddScore()
@@ -39,15 +40,15 @@ namespace Managers
 
         private void LoadScore()
         {
-            int maxScore = SaveAndLoad.SaveAndLoad.LoadScore();
+            _maxScore = SaveAndLoad.SaveAndLoad.LoadScore();
             EventBus.DOOnUpdateCurrentScoreEvent(_currentScore);
-            EventBus.DOOnUpdateMaxScoreEvent(maxScore);
+            EventBus.DOOnUpdateMaxScoreEvent(_maxScore);
         }
 
         private void SaveMaxScore()
         {
-            int maxScore = SaveAndLoad.SaveAndLoad.LoadScore();
-            if (_currentScore > maxScore)
+            _maxScore = SaveAndLoad.SaveAndLoad.LoadScore();
+            if (_currentScore > _maxScore)
                 SaveAndLoad.SaveAndLoad.SaveScore(_currentScore);
         }
     }
