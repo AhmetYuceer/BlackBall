@@ -1,3 +1,4 @@
+using System.Collections;
 using Enums;
 using Managers;
 using UnityEngine;
@@ -135,7 +136,7 @@ namespace Controllers
                 HitTheWall(wall);
             }
         }
-
+ 
         private void EventBusOnStartGameEvent()
         {
             _isStartedGame = true;

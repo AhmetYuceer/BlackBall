@@ -6,8 +6,10 @@ namespace Managers
     {
         public static event Action StartGameEvent;
         public static event Action EndGameEvent;
+        
         public static event Action BallJumpEvent;
         public static event Action HitTheWallEvent;
+        
         public static event Action<int> UpdateCurrentScoreEvent;
         public static event Action<int> UpdateMaxScoreEvent;
         
@@ -40,5 +42,6 @@ namespace Managers
         {
             UpdateMaxScoreEvent?.Invoke(score);
         }
+ 
     }
 }
