@@ -3,6 +3,8 @@ using DG.Tweening;
 
 public class Obstacle : MonoBehaviour
 {
+    [SerializeField] private PolygonCollider2D _collider;
+   
     public void Activate()
     {
         gameObject.SetActive(true);
@@ -16,5 +18,10 @@ public class Obstacle : MonoBehaviour
             {
                 gameObject.SetActive(false);
             });
+    }
+
+    public void ColliderTrigger(bool isTrigger)
+    {
+        _collider.isTrigger = isTrigger;
     }
 }

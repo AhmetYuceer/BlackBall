@@ -24,6 +24,12 @@ namespace Walls
         public void HitTheWall()
         {
             if (_obtacles.Count <= 0) return;
+            
+            foreach (var obstacle in _obtacles)
+            {
+                obstacle.ColliderTrigger(true);
+            }
+            
             _hitParticle?.Play();
             EventBus.OnHitTheWallEvent();
             StartCoroutine(ActivateObtacles(0.5f));
@@ -33,7 +39,7 @@ namespace Walls
         {
             StartCoroutine(DeactivateObtacles());
             ShuffleObtacles();
-            
+
             yield return new WaitForSeconds(delay);
             
             for (int i = 0; i < 4; i++)
@@ -42,6 +48,11 @@ namespace Walls
                 obstacle.Activate();
                 _activeObtacles.Push(obstacle);
                 yield return new WaitForSeconds(0.1f);
+            }
+            
+            foreach (var obstacle in _obtacles)
+            {
+                obstacle.ColliderTrigger(false);
             }
         }
         

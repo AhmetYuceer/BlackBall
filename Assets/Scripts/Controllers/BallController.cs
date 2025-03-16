@@ -119,6 +119,12 @@ namespace Controllers
     
         private void OnCollisionEnter2D (Collision2D other)
         {
+            if (other.transform.CompareTag("Obstacle"))
+            {
+                EventBus.OnEndGameEvent();
+                return;
+            }
+            
             if (other.transform.CompareTag("Wall") && other.transform.TryGetComponent(out WallBase wall))
             {
                 if (!_isStartedGame)

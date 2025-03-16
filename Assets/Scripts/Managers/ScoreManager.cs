@@ -47,7 +47,6 @@ namespace Managers
         private void SaveMaxScore()
         {
             int maxScore = SaveAndLoad.SaveAndLoad.LoadScore();
-
             if (_currentScore > maxScore)
                 SaveAndLoad.SaveAndLoad.SaveScore(_currentScore);
         }

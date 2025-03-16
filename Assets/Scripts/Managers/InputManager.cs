@@ -5,6 +5,7 @@ namespace Managers
     public class InputManager : MonoBehaviour
     {
         private bool _isStartedGame = false;
+        private bool _endGame = false;
 
         private void OnEnable()
         {
@@ -25,7 +26,7 @@ namespace Managers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !_endGame)
             {
                 if (!_isStartedGame)
                     EventBus.OnStartGameEvent();
@@ -42,6 +43,7 @@ namespace Managers
         private void EventBusOnEndGameEvent()
         {
             _isStartedGame = false;
+            _endGame = true;
         }
     }
 }

@@ -7,20 +7,36 @@ namespace Controllers
     {
         [SerializeField] private BallController _ball;
         [SerializeField] private GameObject _jumpAnimationPrefab;
+        private bool _isStartedGame = false;
 
         private void OnEnable()
         {
+            EventBus.StartGameEvent += EventBusOnStartGameEvent;
+            EventBus.EndGameEvent += EventBusOnEndGameEvent;
             EventBus.BallJumpEvent += EventBusOnBallJumpEvent;
         }
 
         private void OnDisable()
         {
+            EventBus.StartGameEvent -= EventBusOnStartGameEvent;
+            EventBus.EndGameEvent -= EventBusOnEndGameEvent;
             EventBus.BallJumpEvent -= EventBusOnBallJumpEvent;
         }
-
+        
+        private void EventBusOnStartGameEvent()
+        {
+            _isStartedGame = true;
+        }
+        
+        private void EventBusOnEndGameEvent()
+        {
+            _isStartedGame = false;
+        }
+        
         private void EventBusOnBallJumpEvent()
         {
-            Instantiate(_jumpAnimationPrefab, _ball.transform.position, Quaternion.identity);
+            if (_isStartedGame)
+                Instantiate(_jumpAnimationPrefab, _ball.transform.position, Quaternion.identity);
         }
     }
 }

@@ -1,11 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
-        private bool _isStartedGame = false;
-        
         private void OnEnable()
         {
             EventBus.StartGameEvent += StartGame;
@@ -20,19 +19,18 @@ namespace Managers
 
         private void Start()
         {
-            _isStartedGame = false;
+            Time.timeScale = 1f;
         }
 
         private void StartGame()
         {
-            _isStartedGame = true;
-            // Debug.Log("Game started");
+            Debug.Log("Game started");
         }
 
         private void EndGame()
         {
-            _isStartedGame = false;
-            Debug.Log("Game ended");
+            Time.timeScale = 0f;
+            Debug.Log("Game Ended");
         }
     }
 }
